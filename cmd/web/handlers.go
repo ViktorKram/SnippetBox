@@ -45,16 +45,22 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
+	snippet := models.Snippet{}
+
+	app.render(w, r, "create.page.html", &templateData{Snippet: &snippet})
+}
+
+func (app *application) addSnippet(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.Header().Set("Allow", http.MethodPost)
 		app.clientError(w, http.StatusMethodNotAllowed)
 		return
 	}
 
-	title := "История про улитку"
-	content := "Улитка выползла из раковины..."
+	title := r.FormValue("Title")
+	text := r.FormValue("Text")
 
-	id, err := app.snippets.Insert(title, content)
+	id, err := app.snippets.Insert(title, text)
 	if err != nil {
 		app.serverError(w, err)
 		return

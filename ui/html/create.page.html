@@ -1,0 +1,28 @@
+{{template "base" .}}
+
+{{define "title"}}Создание заметки{{end}}
+{{define "main"}}
+<h2>Новая заметка</h2>
+<div class="snippet">
+    <form action="/snippet/post" method="post">
+    <table>
+        <tr>
+            <th>Заголовок</th>
+        </tr>
+        <tr>
+            <td><input name="Title" type=text></td>
+        </tr>
+        <tr>
+            <th>Текст</th>
+        </tr>
+        <tr>
+            <td><textarea name="Text" type=text></textarea></td>
+        </tr>
+        <tr>
+            <td><input name="snippet_creation_submit" type="submit" value="Создать заметку"></td>
+            </form>
+        </tr>
+    </table>
+</div>
+{{end}}
+

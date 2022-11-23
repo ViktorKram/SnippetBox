@@ -258,7 +258,7 @@ button:hover {
 }
 
 .snippet .metadata time:last-child {
-    float: right;
+    float: left;
 }
 
 div.flash {
@@ -292,7 +292,7 @@ td, th {
 }
 
 th:last-child, td:last-child {
-    text-align: right;
+    text-align: left;
     color: #6A6C6F;
 }
 
