@@ -13,7 +13,7 @@ func (app *application) routes() *chi.Mux {
 		r.Get("/", app.home)
 
 		r.Route("/snippet", func(r chi.Router) {
-			r.Get("/", app.showSnippet)
+			r.Get("/{id}", app.showSnippet)
 
 			r.Route("/create", func(r chi.Router) {
 				r.Get("/", app.createSnippet)
@@ -24,7 +24,7 @@ func (app *application) routes() *chi.Mux {
 			})
 
 			r.Route("/delete", func(r chi.Router) {
-				r.Delete("/", app.deleteSnippet)
+				r.Get("/{id}", app.deleteSnippet)
 			})
 		})
 	})

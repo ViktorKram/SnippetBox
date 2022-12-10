@@ -44,10 +44,14 @@ func (model *SnippetModel) Get(id int) (*models.Snippet, error) {
 	err = transaction.QueryRow(query, id).Scan(&snippet.ID, &snippet.Title, &snippet.Content, &snippet.Created, &snippet.Expires)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			transaction.Rollback()
 			return nil, models.ErrNoRecord
 		}
 
+		return nil, err
+	}
+
+	err = transaction.Commit()
+	if err != nil {
 		return nil, err
 	}
 
@@ -79,4 +83,21 @@ func (model *SnippetModel) Latest() ([]*models.Snippet, error) {
 	}
 
 	return snippets, nil
+}
+
+func (model *SnippetModel) Delete(id int) error {
+	transaction, err := model.DB.Begin()
+	if err != nil {
+		return err
+	}
+
+	query := "DELETE FROM snippets WHERE id = $1"
+	transaction.QueryRow(query, id)
+
+	err = transaction.Commit()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
