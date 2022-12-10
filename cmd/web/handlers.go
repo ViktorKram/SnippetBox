@@ -51,12 +51,6 @@ func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) addSnippet(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		w.Header().Set("Allow", http.MethodPost)
-		app.clientError(w, http.StatusMethodNotAllowed)
-		return
-	}
-
 	title := r.FormValue("Title")
 	text := r.FormValue("Text")
 
@@ -67,4 +61,8 @@ func (app *application) addSnippet(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, fmt.Sprintf("/snippet?id=%d", id), http.StatusSeeOther)
+}
+
+func (app *application) deleteSnippet(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("deleting")
 }
